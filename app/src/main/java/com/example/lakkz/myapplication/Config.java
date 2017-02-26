@@ -5,7 +5,7 @@ package com.example.lakkz.myapplication;
  */
 
 public class Config {
-    public static final String URL_GET_ALL = "http://192.168.1.10/basic-php-master/view.php";
+    public static final String URL_GET_ALL = "http://www.newnanotechint.com/get/appdata";
 
     //JSON Tags
     public static final String TAG_JSON_ARRAY="result";

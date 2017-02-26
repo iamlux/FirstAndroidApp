@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ViewAllData extends AppCompatActivity implements ListView.OnItemClickListener {
+public class ViewAllData extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ListView listView;
 
@@ -46,11 +46,9 @@ public class ViewAllData extends AppCompatActivity implements ListView.OnItemCli
 
             for(int i = 0; i<result.length(); i++){
                 JSONObject jo = result.getJSONObject(i);
-                String id = jo.getString(Config.TAG_ID);
                 String name = jo.getString(Config.TAG_NAME);
 
                 HashMap<String,String> employees = new HashMap<>();
-                employees.put(Config.TAG_ID,id);
                 employees.put(Config.TAG_NAME,name);
                 list.add(employees);
             }
@@ -61,8 +59,8 @@ public class ViewAllData extends AppCompatActivity implements ListView.OnItemCli
 
         ListAdapter adapter = new SimpleAdapter(
                 ViewAllData.this, list, R.layout.list_item,
-                new String[]{Config.TAG_ID,Config.TAG_NAME},
-                new int[]{R.id.id, R.id.name});
+                new String[]{Config.TAG_NAME},
+                new int[]{R.id.name});
 
         listView.setAdapter(adapter);
     }
@@ -98,10 +96,15 @@ public class ViewAllData extends AppCompatActivity implements ListView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, ViewAllData.class);
-        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
-        String empId = map.get(Config.TAG_ID).toString();
-        intent.putExtra(Config.TAG_ID,empId);
-        startActivity(intent);
+
     }
+
+//    @Override
+//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        Intent intent = new Intent(this, ViewAllData.class);
+//        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
+//        String empId = map.get(Config.TAG_ID).toString();
+//        intent.putExtra(Config.TAG_ID,empId);
+//        startActivity(intent);
+//    }
 }

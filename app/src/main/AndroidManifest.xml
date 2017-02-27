@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ViewAllData"></activity>
+        <activity android:name=".CreateDataActivity"></activity>
     </application>
 
 </manifest>

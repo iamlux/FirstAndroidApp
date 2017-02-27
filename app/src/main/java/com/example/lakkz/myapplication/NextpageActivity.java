@@ -12,7 +12,6 @@ public class NextpageActivity extends AppCompatActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Get the view from new_activity.xml
         setContentView(R.layout.activity_view_all_employee);
     }
 }

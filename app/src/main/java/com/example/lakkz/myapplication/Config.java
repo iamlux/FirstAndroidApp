@@ -5,7 +5,8 @@ package com.example.lakkz.myapplication;
  */
 
 public class Config {
-    public static final String URL_GET_ALL = "http://www.newnanotechint.com/get/appdata";
+    public static final String URL_GET_ALL = "http://www.newnanotechint.com/api/get/appdata";
+    public static final String URL_POST_ALL = "http://www.newnanotechint.com/api/store/appdata";
 
     //JSON Tags
     public static final String TAG_JSON_ARRAY="result";

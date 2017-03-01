@@ -1,5 +1,7 @@
 package com.example.lakkz.myapplication;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -54,7 +56,6 @@ public class RequestHandler {
         try {
             //Initializing Url
             url = new URL(requestURL);
-
             //Creating an httmlurl connection
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -73,14 +74,12 @@ public class RequestHandler {
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
             writer.write(getPostDataString(postDataParams));
-
             writer.flush();
             writer.close();
             os.close();
             int responseCode = conn.getResponseCode();
 
             if (responseCode == HttpsURLConnection.HTTP_OK) {
-
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 sb = new StringBuilder();
                 String response;

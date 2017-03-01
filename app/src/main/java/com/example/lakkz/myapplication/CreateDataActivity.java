@@ -5,11 +5,19 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.HashMap;
 
 /**
@@ -17,7 +25,6 @@ import java.util.HashMap;
  */
 
 public class CreateDataActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText inputId;
     private EditText inputName;
     private EditText inputAge;
     private EditText inputDescription;
@@ -26,7 +33,6 @@ public class CreateDataActivity extends AppCompatActivity implements View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_data);
-        inputId = (EditText) findViewById(R.id.id);
         inputName = (EditText) findViewById(R.id.name);
         inputAge = (EditText) findViewById(R.id.age);
         inputDescription = (EditText) findViewById(R.id.description);
@@ -37,11 +43,11 @@ public class CreateDataActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void addInsertData() {
-        final String dataId = inputId.getText().toString().trim();
         final String dataName = inputName.getText().toString().trim();
         final String dataAge = inputAge.getText().toString().trim();
         final String dataDescription = inputDescription.getText().toString().trim();
 
+        Log.d("create_data", dataName);
         class AddInsertData extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -52,8 +58,7 @@ public class CreateDataActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             protected String doInBackground(Void... v) {
-                HashMap<String, String> params = new HashMap<>();
-                params.put(Config.TAG_ID, dataId);
+                HashMap<String,String> params = new HashMap<>();
                 params.put(Config.TAG_NAME, dataName);
                 params.put(Config.TAG_AGE, dataAge);
                 params.put(Config.TAG_DESCRIPTION, dataDescription);

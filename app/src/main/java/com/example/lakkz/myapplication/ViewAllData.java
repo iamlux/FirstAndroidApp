@@ -1,14 +1,18 @@
 package com.example.lakkz.myapplication;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -27,12 +31,17 @@ public class ViewAllData extends AppCompatActivity implements AdapterView.OnItem
 
     private String JSON_STRING;
 
+    private Button buttonDelete;
+
+    private String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all_employee);
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
+        buttonDelete = (Button) findViewById(R.id.deleteList);
         getJSON();
     }
 
@@ -92,6 +101,62 @@ public class ViewAllData extends AppCompatActivity implements AdapterView.OnItem
         }
         GetJSON gj = new GetJSON();
         gj.execute();
+    }
+
+    private void deleteRecord() {
+        class DeleteRec extends AsyncTask<Void, Void, String> {
+            ProgressDialog load;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                load = ProgressDialog.show(ViewAllData.this, "Delete Recored", "Wait....", false, false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                load.dismiss();
+                Toast.makeText(ViewAllData.this, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(Config.URL_DELETE, id);
+                return s;
+            }
+        }
+        DeleteRec del = new DeleteRec();
+        del.execute();
+    }
+
+    public void myClickHandler(View v) {
+            confirmDeleteRecord();
+    }
+
+    private void confirmDeleteRecord() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure you want to delete this record");
+
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteRecord();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     @Override
